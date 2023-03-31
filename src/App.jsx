@@ -13,7 +13,7 @@ const PokemonRow = ({pokemon, onSelect}) => (
       <button
         onClick={() => onSelect(pokemon)}
       >
-        Select!
+        More Information
       </button>
     </td>
   </tr>
@@ -33,6 +33,7 @@ const PokemonInfo = ({name, base}) => (
   <div>
     <h1>{name.english}</h1>
     <table>
+      <tbody>
       {
         Object.keys(base).map((key) => (
           <tr key={key}>
@@ -41,6 +42,7 @@ const PokemonInfo = ({name, base}) => (
           </tr>
         ))
       }
+      </tbody>
     </table>
   </div>
 );
