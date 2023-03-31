@@ -23,6 +23,7 @@ PokemonRow.PropTypes = {
 
 function App() {
   const [filter, setFilter] = React.useState("");
+  const [selectedPokemon, setSelectedPokemon] = React.useState("null");
   return (
     <div
       style={{
@@ -64,6 +65,11 @@ function App() {
             </tbody>
           </table>
         </div>
+        {selectedPokemon && (
+          <div>
+            <h1>{selectedPokemon.name.english}</h1>
+          </div>
+        )}
       </div>
     </div>
   )
