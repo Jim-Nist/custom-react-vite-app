@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import PropTypes, { arrayOf } from 'prop-types'
+import propTypes, { arrayOf } from 'prop-types'
 import './App.css'
 import pokemon from './pokemon.json'
 
@@ -19,13 +19,43 @@ const PokemonRow = ({pokemon, onSelect}) => (
   </tr>
 );
 
-PokemonRow.PropTypes = {
-  pokemon: PropTypes.shape({
-    name: PropTypes.shape({
-      english: PropTypes.string,
+PokemonRow.propTypes = {
+  pokemon: propTypes.shape({
+    name: propTypes.shape({
+      english: propTypes.string,
     }),
-    type: PropTypes.arrayOf(PropTypes.string),
-    onSelect: PropTypes.func,
+    type: propTypes.arrayOf(propTypes.string),
+    onSelect: propTypes.func,
+  }),
+};
+
+const PokemonInfo = ({name, base}) => (
+  <div>
+    <h1>{name.english}</h1>
+    <table>
+      {
+        Object.keys(base).map((key) => (
+          <tr key={key}>
+            <td>{key}</td>
+            <td>{base[key]}</td>
+          </tr>
+        ))
+      }
+    </table>
+  </div>
+);
+
+PokemonInfo.propTypes = {
+    name: propTypes.shape({
+      english: propTypes.string,
+    base: propTypes.shape({
+      HP: propTypes.number.isRequired,
+      Attack: propTypes.number.isRequired,
+      Defense: propTypes.number.isRequired,
+      "Sp. Attack": propTypes.number.isRequired,
+      "Sp. Defense": propTypes.number.isRequired,
+      Speed: propTypes.number.isRequired,
+    })
   }),
 };
 
@@ -77,11 +107,7 @@ function App() {
             </tbody>
           </table>
         </div>
-        {selectedPokemon && (
-          <div>
-            <h1>{selectedPokemon.name.english}</h1>
-          </div>
-        )}
+        {selectedPokemon && <PokemonInfo {...selectedPokemon}/>}
       </div>
     </div>
   )
