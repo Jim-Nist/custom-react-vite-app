@@ -5,10 +5,17 @@ import PropTypes, { arrayOf } from 'prop-types'
 import './App.css'
 import pokemon from './pokemon.json'
 
-const PokemonRow = ({pokemon}) => (
+const PokemonRow = ({pokemon, onSelect}) => (
   <tr>
     <td>{pokemon.name.english}</td>
     <td>{pokemon.type.join(", ")}</td>
+    <td>
+      <button
+        onClick={() => onSelect(pokemon)}
+      >
+        Select!
+      </button>
+    </td>
   </tr>
 );
 
@@ -18,12 +25,13 @@ PokemonRow.PropTypes = {
       english: PropTypes.string,
     }),
     type: PropTypes.arrayOf(PropTypes.string),
+    onSelect: PropTypes.func,
   }),
 };
 
 function App() {
   const [filter, setFilter] = React.useState("");
-  const [selectedPokemon, setSelectedPokemon] = React.useState("null");
+  const [selectedPokemon, setSelectedPokemon] = React.useState(null);
   return (
     <div
       style={{
@@ -59,7 +67,11 @@ function App() {
                 )
                 .slice(0,20)
                 .map(pokemon => (
-                  <PokemonRow pokemon={pokemon} key={pokemon.id}/>
+                  <PokemonRow 
+                    pokemon={pokemon} 
+                    key={pokemon.id} 
+                    onSelect={(pokemon) => setSelectedPokemon(pokemon)}
+                  />
                 ))
               }
             </tbody>
