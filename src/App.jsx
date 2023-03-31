@@ -65,26 +65,11 @@ function App() {
   const [filter, setFilter] = React.useState("");
   const [selectedPokemon, setSelectedPokemon] = React.useState(null);
   return (
-    <div
-      style={{
-        margin: "auto",
-        width: 800 ,
-        paddingTop: "1rem",
-      }}
-      >
+    <div style={{margin: "auto", width: 800 , padding: "2rem" }}>
       <h1 className='title'>Pokemon Search</h1>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "70% 30%",
-          columnGap: "1rem",
-        }}
-      >
+      <div style={{display: "grid", gridTemplateColumns: "70% 30%", columnGap: "1rem"}}>
         <div>
-          <input
-            value={filter}
-            onChange={(evt) => setFilter(evt.target.value)}
-          />
+          <input value={filter} onChange={(evt) => setFilter(evt.target.value)}/>
           <table width="100%">
             <thead>
               <tr>
@@ -94,15 +79,15 @@ function App() {
             </thead>
             <tbody>
               {pokemon
-                .filter((pokemon) => 
+                .filter((pokemon) => (
                   pokemon.name.english.toLowerCase().includes(filter.toLowerCase())
-                )
+                ))
                 .slice(0,20)
                 .map(pokemon => (
                   <PokemonRow 
-                    pokemon={pokemon} 
-                    key={pokemon.id} 
-                    onSelect={(pokemon) => setSelectedPokemon(pokemon)}
+                  pokemon={pokemon} 
+                  key={pokemon.id} 
+                  onSelect={(pokemon) => setSelectedPokemon(pokemon)}
                   />
                 ))
               }
