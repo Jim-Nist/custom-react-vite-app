@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import propTypes, { arrayOf } from 'prop-types'
 import './App.css'
-import pokemon from './pokemon.json'
 
 const PokemonRow = ({pokemon, onSelect}) => (
   <tr>
@@ -62,8 +61,16 @@ PokemonInfo.propTypes = {
 };
 
 function App() {
-  const [filter, setFilter] = React.useState("");
-  const [selectedPokemon, setSelectedPokemon] = React.useState(null);
+  const [filter, setFilter] = useState("");
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [pokemon, setPokemon] = useState([]);
+
+  useEffect(()=>{
+    fetch("http://localhost:5173/custom-react-vite-app/pokemon.json")
+    .then((Response)=> Response.json())
+    .then((data) => setPokemon(data))
+  },[]);
+
   return (
     <div style={{margin: "auto", width: 800 , padding: "2rem" }}>
       <h1 className='title'>Pokemon Search</h1>
@@ -87,14 +94,14 @@ function App() {
                   <PokemonRow 
                   pokemon={pokemon} 
                   key={pokemon.id} 
-                  onSelect={(pokemon) => setSelectedPokemon(pokemon)}
+                  onSelect={(pokemon) => setSelectedItem(pokemon)}
                   />
                 ))
               }
             </tbody>
           </table>
         </div>
-        {selectedPokemon && <PokemonInfo {...selectedPokemon}/>}
+        {selectedItem && <PokemonInfo {...selectedItem}/>}
       </div>
     </div>
   )
